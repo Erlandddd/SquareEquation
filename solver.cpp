@@ -1,13 +1,21 @@
 #include <stdio.h>
-#include <stdlib.h>    //isfinite
-#include <math.h>      //x1 != nullptr
+#include <math.h>
 #include <TXLib.h>
 
-#include "square_equation.h"
+#include "solver.h"
 
 
 int Square_Equation (double a, double b, double c, double* x1, double* x2)
 {
+    assert (isfinite (a) != 0);                  //checking that coefficients are finite numbers
+    assert (isfinite (b) != 0);
+    assert (isfinite (c) != 0);
+
+    assert (x1 != nullptr);                      //null pointer check
+    assert (x2 != nullptr);
+    assert (x1 != x2);
+
+
      if (Double_Comparison (a, 0))               //a == 0 --> linear equation
     {
         return Linear_Equation (b, c, x1);
@@ -38,8 +46,27 @@ int Square_Equation (double a, double b, double c, double* x1, double* x2)
 
     if (D > 0)
     {
-        *x1 = (-b + sqrt(D)) / (2 * a);
-        *x2 = (-b - sqrt(D)) / (2 * a);
+        double sqrt_D = sqrt (D);
+
+        if (Double_Comparison (-b + sqrt_D, 0))
+        {
+            *x1 = 0;
+            *x2 = (-b - sqrt_D) / (2 * a);
+
+            return TWO_ROOTS;
+        }
+
+        if (Double_Comparison (-b - sqrt_D, 0))
+        {
+            *x1 = (-b + sqrt_D) / (2 * a);
+            *x2 = 0;
+
+            return TWO_ROOTS;
+        }
+
+        *x1 = (-b + sqrt_D) / (2 * a);
+        *x2 = (-b - sqrt_D) / (2 * a);
+
         return TWO_ROOTS;
     }
 
@@ -50,6 +77,10 @@ int Square_Equation (double a, double b, double c, double* x1, double* x2)
 
 int Linear_Equation (double b, double c, double* x1)    //the function solves the linear equation
 {
+    assert (isfinite (b) != 0);                         //checking that coefficients are finite numbers
+    assert (isfinite (c) != 0);
+    assert (x1 != nullptr);                             //null pointer check
+
     if (Double_Comparison (b, 0))                       //b == 0
     {
 

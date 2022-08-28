@@ -1,22 +1,26 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include <TXLib.h>
 
-#include "square_equation.h"
+#include "input_output.h"
 
 
 int Input_Coefficient(double* a, double* b, double* c)      //Entering coefficients
 {
-
+    txSetConsoleAttr (FOREGROUND_LIGHTBLUE | BACKGROUND_BLACK);
     printf ("ENTER SQUARE EQUATION COEFFICIENTS: a b c.\n");
     printf ("TO EXIT THE PROGRAM, ENTER ANY LETTER.\n");
+    txSetConsoleAttr ();
 
-    if (scanf ("%lg %lg %lg", &*a, &*b, &*c) != 3)           //checking the number of entered coefficients
+    if (scanf ("%lg %lg %lg", a, b, c) != 3)           //checking the number of entered coefficients
     {
+        txSetConsoleAttr (FOREGROUND_LIGHTGREEN | BACKGROUND_BLACK);
         printf ("FUNCTION HAS COMPLETED ITS ACTION!");
+        txSetConsoleAttr ();
+
         return 0;
     }
+
     return 1;
 }
 
@@ -24,6 +28,7 @@ int Input_Coefficient(double* a, double* b, double* c)      //Entering coefficie
 
 void Output_Answer (double a, double b, double c, int nRoots, double x1, double x2)        //outputs the answer
 {
+    txSetConsoleAttr (FOREGROUND_YELLOW | BACKGROUND_BLACK);
     printf ("SQUARE EQUATION: %.2lgx*x%+.2lgx%+.2lg = 0\n", a, b, c);                      //shows the equation with the given coefficients
     switch (nRoots)
     {
@@ -41,8 +46,10 @@ void Output_Answer (double a, double b, double c, int nRoots, double x1, double 
             printf ("THIS EQUATION HAS AN INFINITE NUMBER OF ROOTS!\n");
             break;
         default:
+            txSetConsoleAttr (FOREGROUND_RED | BACKGROUND_BLACK);
             printf ("ERROR!!!\n");                                                          //if something goes wrong, it shows an ERROR!s
     }
+    txSetConsoleAttr ();
     printf ("------------------------------------------------\n");
 }
 

@@ -1,12 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include <TXLib.h>
 
-#include "square_equation.h"
+#include "main.h"
 
 int main ()
 {
+    txSetConsoleAttr (FOREGROUND_YELLOW | BACKGROUND_BLACK);
+
     printf ("THIS FUNCTION SOLVES A SQUARE EQUATION OF THE TYPE ax2 + bx + c = 0\n");     //Brief information about the function
     printf ("AND DISPLAYS THE ROOTS OF THE EQUATION, THE NUMBER OF ROOTS, FORMULA FOR FINDING THE ROOTS.\n\n");
 

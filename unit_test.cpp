@@ -3,14 +3,16 @@
 #include <math.h>
 #include <TXLib.h>
 
-#include "square_equation.h"
+#include "unit_test.h"
 
 
 void Square_Unit_Tests ()                                                    //function performs unit tests
 {
     double a = 0, b = 0, c = 0, TestX1 = 0, TestX2 = 0;
     int nTestRoots = 0, SuccessTests = 0, CountTests = 0;
-    FILE * FileTests;
+    FILE * FileTests = NULL;
+
+    txSetConsoleAttr (FOREGROUND_LIGHTCYAN | BACKGROUND_BLACK);
 
     printf ("PERFORMING UNIT TESTS:\n");
 
@@ -18,6 +20,7 @@ void Square_Unit_Tests ()                                                    //f
 
     if (FileTests == NULL)
     {
+        txSetConsoleAttr (FOREGROUND_RED | BACKGROUND_BLACK);
         printf ("ERROR!!! UNABLE TO OPEN FILE WITH UNIT TESTS!!! PROGRAM COMPLETE!!!\n"); //shows an error when there are problems opening the file
         exit(EXIT_FAILURE);
     }
@@ -30,9 +33,14 @@ void Square_Unit_Tests ()                                                    //f
 
     fclose (FileTests);
 
-    printf ("------------------------------------------------\n");                                                  //summary of all tests
+    txSetConsoleAttr ();
+    printf ("------------------------------------------------\n");
+
+    txSetConsoleAttr (FOREGROUND_LIGHTCYAN | BACKGROUND_BLACK);                                                  //summary of all tests
     printf ("SUCCESSFUL TEST PERFORMANCE: %d/%d.\n"\
     "NUMBER OF FAILED TESTS: %d.\n", SuccessTests, CountTests, CountTests - SuccessTests);
+
+    txSetConsoleAttr ();
     printf ("------------------------------------------------\n");
 }
 
@@ -44,13 +52,14 @@ int Check_One_Test (double a, double b, double c, int nTestRoots, double TestX1,
 
     if (!(nRoots == nTestRoots && Double_Comparison (x1, TestX1) && Double_Comparison (x2, TestX2)))                //in case of failure
     {
+        txSetConsoleAttr (FOREGROUND_RED | BACKGROUND_BLACK);
         printf ("\nERROR:TEST ¹%d - a = %.2lg, b = %.2lg, c = %.2lg\n", CountTests, a, b, c);
         printf ("  CORRECT ANSWER: nRoots = %d, x1 = %.2lg, x2 = %.2lg\n", nTestRoots, TestX1, TestX2);
         printf ("INCORRECT ANSWER: nRoots = %d, x1 = %.2lg, x2 = %.2lg\n\n", nRoots, x1, x2);
 
         return 0;
     }
-                                                                                                                    //if successful
+    txSetConsoleAttr (FOREGROUND_GREEN | BACKGROUND_BLACK);                                                    //if successful
     printf ("TEST ¹%2.d:  SUCCESS!\n", CountTests);
 
     return 1;
